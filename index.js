@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const userRoute = require("./routes/user.js")
+const authRoute = require("./routes/auth.js");
+const userRoute = require("./routes/user.js");
 
 //connect database
 mongoose.connect(process.env.MONGO_URL)
@@ -16,10 +17,12 @@ mongoose.connect(process.env.MONGO_URL)
      console.log(err);
 });
 
+
 app.use(express.json());
+app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
 //server
 app.listen(process.env.PORT || 3000, ()=>{
      console.log("Server running at port no 3000");
-})
+});
